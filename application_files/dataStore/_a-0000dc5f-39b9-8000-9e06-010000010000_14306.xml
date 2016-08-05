@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataStoreHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <dataStore>
+        <uuid>_a-0000dc5f-39b9-8000-9e06-010000010000_14306</uuid>
+        <name>VFM_Vehicles</name>
+        <description>All vehicles in the fleet</description>
+        <dataSourceKey>jdbc/AppianBusinessDS</dataSourceKey>
+        <adaptingExplicitSqlNames>false</adaptingExplicitSqlNames>
+        <autoUpdateSchema>false</autoUpdateSchema>
+        <entities>
+            <entity>
+                <uuid>7bde6f65-5433-473b-98b4-d0734d542107</uuid>
+                <name>vehicleEntity</name>
+                <type>{urn:com:appian:types}VFM_Datastore</type>
+            </entity>
+        </entities>
+    </dataStore>
+    <isPublished>true</isPublished>
+    <roleMap>
+        <role allowForAll="false" inherit="false" name="administrators">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dc5f-39bb-8000-9e04-010000010000_104</groupUuid>
+            </groups>
+        </role>
+        <role allowForAll="false" inherit="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="true" inherit="false" name="readers">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dc5f-39bb-8000-9e04-010000010000_103</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</dataStoreHaul>
