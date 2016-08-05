@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tempoReportHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <tempoReport name="My_Tasks" a:uuid="9a9c998d-7749-452d-af4f-c5f9457466ff">
+        <a:description>Test Report</a:description>
+        <a:uiExpr>=#&quot;_a-0000dc24-b9e1-8000-9e06-010000010000_14218&quot;()</a:uiExpr>
+        <a:urlStub>EAwYUw</a:urlStub>
+    </tempoReport>
+    <roleMap/>
+</tempoReportHaul>

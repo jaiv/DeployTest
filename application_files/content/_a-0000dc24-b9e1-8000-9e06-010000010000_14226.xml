@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>expenseReportForm</name>
+        <uuid>_a-0000dc24-b9e1-8000-9e06-010000010000_14226</uuid>
+        <description>This is a sample interface</description>
+        <parentUuid>_a-0000d9d3-0af4-8000-9e06-010000010000_59</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!readOnly: ri!step=&quot;APPROVAL&quot;,&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Submit Expense Report&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Expense Item&quot;,&#xD;
+        labelPosition: &quot;ABOVE&quot;,&#xD;
+        value: ri!expenseItem,&#xD;
+        saveInto: ri!expenseItem,&#xD;
+        refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+        required: not(local!readOnly),&#xD;
+        readOnly: local!readOnly,&#xD;
+        validations: {},&#xD;
+        align: &quot;LEFT&quot;&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+        label: &quot;Expense Date&quot;,&#xD;
+        labelPosition: &quot;ABOVE&quot;,&#xD;
+        value: ri!expenseDate,&#xD;
+        saveInto: ri!expenseDate,&#xD;
+        required: not(local!readOnly),&#xD;
+        readOnly: local!readOnly,&#xD;
+        validations: {},&#xD;
+        align: &quot;LEFT&quot;&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_floatingPointField&quot;(&#xD;
+        label: &quot;Expense Amount&quot;,&#xD;
+        labelPosition: &quot;ABOVE&quot;,&#xD;
+        value: ri!expenseAmount,&#xD;
+        saveInto: ri!expenseAmount,&#xD;
+        refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+        required: not(local!readOnly),&#xD;
+        readOnly: local!readOnly,&#xD;
+        validations: {},&#xD;
+        align: &quot;LEFT&quot;&#xD;
+      ),&#xD;
+      #&quot;_a-0000dc24-b9e1-8000-9e06-010000010000_14202&quot;(&#xD;
+        displayWhen: ri!expenseAmount &gt;= 100,&#xD;
+        readOnly: local!readOnly,&#xD;
+        required: not(local!readOnly),&#xD;
+        commentValue: ri!comments,&#xD;
+        commentSaveInto: ri!comments&#xD;
+      ),&#xD;
+      if(&#xD;
+        local!readOnly,&#xD;
+        #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(&#xD;
+          labelPosition: &quot;COLLAPSED&quot;,&#xD;
+          choiceLabels: {&quot;Approve&quot;, &quot;Reject&quot;},&#xD;
+          choiceValues: {true, false},&#xD;
+          value: ri!approve,&#xD;
+          saveInto: ri!approve,&#xD;
+          required: true&#xD;
+        ),&#xD;
+        {}&#xD;
+      )&#xD;
+    },&#xD;
+    secondColumnContents: {},&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Submit&quot;,&#xD;
+          style: &quot;PRIMARY&quot;&#xD;
+        )&#xD;
+      },&#xD;
+      secondarybuttons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Cancel&quot;,&#xD;
+          style: &quot;NORMAL&quot;,&#xD;
+          value: true,&#xD;
+          saveInto: ri!cancel,&#xD;
+          skipvalidation: true&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>expenseItem</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>expenseDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>expenseAmount</name>
+            <type>
+                <name>double</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>comments</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>step</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>approve</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>expenseItem</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                    <a:nameRef>expenseDate</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:double"/>
+                    <a:nameRef>expenseAmount</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>cancel</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>comments</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>step</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:boolean"/>
+                    <a:nameRef>approve</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>

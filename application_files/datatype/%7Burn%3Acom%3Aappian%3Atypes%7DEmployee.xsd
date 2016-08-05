@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="Employee">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[Test CDTs]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="firstName" nillable="true" type="xsd:string"/>
+      <xsd:element name="lastName" nillable="true" type="xsd:string"/>
+      <xsd:element name="department" nillable="true" type="xsd:string"/>
+      <xsd:element name="title" nillable="true" type="xsd:string"/>
+      <xsd:element name="phoneNumber" nillable="true" type="xsd:string"/>
+      <xsd:element name="startDate" nillable="true" type="xsd:date"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

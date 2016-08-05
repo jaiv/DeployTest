@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>AT_myTaskReport</name>
+        <uuid>_a-0000dc24-b9e1-8000-9e06-010000010000_14218</uuid>
+        <description>for My_Task_Report constant </description>
+        <parentUuid>_a-0000d9d3-0af4-8000-9e06-010000010000_59</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex: 1, batchSize: 5),&#xD;
+  with(&#xD;
+    local!report: a!queryProcessAnalytics(&#xD;
+      report: cons!MY_TASKS_REPORT,&#xD;
+      query: #&quot;SYSTEM_SYSRULES_query&quot;(pagingInfo: local!pagingInfo)&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      label: local!report.name,&#xD;
+      instructions: local!report.description,&#xD;
+      totalCount: local!report.totalCount,&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: local!report.columnConfigs[1].label,&#xD;
+          field: local!report.columnConfigs[1].field,&#xD;
+          data: index(local!report.data, &quot;c0&quot;, {})&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: local!report.columnConfigs[4].label,&#xD;
+          field: local!report.columnConfigs[4].field,&#xD;
+          data: index(local!report.data, &quot;c3&quot;, {})&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: local!report.columnConfigs[5].label,&#xD;
+          field: local!report.columnConfigs[5].field,&#xD;
+          data: index(local!report.data, &quot;c5&quot;, {})&#xD;
+        )&#xD;
+      },&#xD;
+      value: local!pagingInfo,&#xD;
+      saveInto: local!pagingInfo&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>
