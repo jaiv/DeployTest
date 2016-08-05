@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types:PR"
+  xmlns:tns="urn:com:appian:types:PR" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3APR%7DPR_Level.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3APR%7DPR_Paragraph.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3APR%7DPR_Priority.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3APR%7DPR_Rating.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3APR%7DPR_Status.xsd"/>
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%3APR%7DPR_TaskType.xsd"/>
+  <xsd:complexType name="PR_Recognition">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">@Table(name="qckapp_pr_main")</xsd:appinfo>
+      <xsd:documentation><![CDATA[Structure of a single Recognition]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @GeneratedValue</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="employeeId" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="employeename")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="PR_status" nillable="true" type="tns:PR_Status">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@JoinColumn(name="status") @ManyToOne(cascade=REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="PR_priority" nillable="true" type="tns:PR_Priority">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@JoinColumn(name="priority") @ManyToOne(cascade=REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="employee" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="employee")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="PR_taskType" type="tns:PR_TaskType">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToMany(indexed=false) @JoinTable(name="qckapp_pr_join_tasktype", joinColumns=@JoinColumn(name="tasktype"), inverseJoinColumns=@JoinColumn(name="inv_tasktype"))</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="PR_level" nillable="true" type="tns:PR_Level">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@JoinColumn(name="level") @ManyToOne(cascade=REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="PR_rating" nillable="true" type="tns:PR_Rating">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@JoinColumn(name="rating") @ManyToOne(cascade=REFRESH)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="PR_descriptio" nillable="true" type="tns:PR_Paragraph">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@JoinColumn(name="description") @OneToOne(cascade=ALL)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="folderId" nillable="true" type="xsd:int"/>
+      <xsd:element name="createdBy" nillable="true" type="xsd:string"/>
+      <xsd:element name="createdOn" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="updatedBy" nillable="true" type="xsd:string"/>
+      <xsd:element name="updatedOn" nillable="true" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

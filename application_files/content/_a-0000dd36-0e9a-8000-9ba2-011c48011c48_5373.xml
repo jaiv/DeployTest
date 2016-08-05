@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PR_CreateUpdateRecognition</name>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5373</uuid>
+        <description>Interface for creating and updating Recognitions</description>
+        <parentUuid>132e1da9-afdb-42c8-93da-6f7af6fa6f4e</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!creating: isnull(ri!record),
+  local!oldRecord: ri!record,
+  local!oldDocuments: if(
+    isnull(ri!documents),
+    {},
+    ri!documents
+  ),
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    label: if(
+      local!creating,
+      &quot;Add New Recognition&quot;,
+      &quot;Update Recognition&quot;
+    ),
+    firstColumnContents: {
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5370&quot;(
+        record: ri!record,
+        documents: ri!documents,
+        deletedDocuments: ri!deletedDocs,
+        creating: local!creating,
+        readOnly: false
+      )
+    },
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+      primaryButtons: {
+        if(
+          local!creating,
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: &quot;Submit Recognition&quot;,
+            style: &quot;PRIMARY&quot;,
+            saveInto: {
+              a!save(ri!record.createdOn, now()),
+              a!save(ri!record.createdBy, loggedInUser()),
+              a!save(ri!record.updatedOn, now()),
+              a!save(ri!record.updatedBy, loggedInUser()),
+              a!save(ri!documents, reject(fn!isnull, ri!documents))
+            }
+          ),
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: &quot;Update Recognition&quot;,
+            style: &quot;PRIMARY&quot;,
+            saveInto: {
+              a!save(ri!record.updatedOn, now()),
+              a!save(ri!record.updatedBy, loggedInUser()),
+              a!save(ri!oldRecord, local!oldRecord),
+              a!save(ri!documents, reject(fn!isnull, ri!documents)),
+              a!save(ri!addedDocs, difference(ri!documents, local!oldDocuments)),
+              a!save(ri!oldDocs, local!oldDocuments)
+            }
+          )
+        )
+      },
+      secondaryButtons: {
+        if(
+          local!creating,
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: &quot;Cancel&quot;,
+            style: &quot;NORMAL&quot;,
+            value: true,
+            saveInto: {
+              ri!cancel,
+              if(
+                isnull(ri!documents),
+                {},
+                a!save(ri!deletedDocs, append(ri!deletedDocs, ri!documents)) 
+              )
+            },
+            skipValidation: true
+          ),
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: &quot;Cancel&quot;,
+            style: &quot;NORMAL&quot;,
+            value: true,
+            saveInto: {
+              ri!cancel,
+              a!save(ri!addedDocs, difference(ri!documents, local!oldDocuments)),
+              a!save(ri!deletedDocs, append(difference(ri!deletedDocs, local!oldDocuments), ri!addedDocs))
+            },
+            skipValidation: true
+          )
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>record</name>
+            <type>
+                <name>PR_Recognition</name>
+                <namespace>urn:com:appian:types:PR</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>oldRecord</name>
+            <type>
+                <name>PR_Recognition</name>
+                <namespace>urn:com:appian:types:PR</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documents</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addedDocs</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedDocs</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>oldDocs</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

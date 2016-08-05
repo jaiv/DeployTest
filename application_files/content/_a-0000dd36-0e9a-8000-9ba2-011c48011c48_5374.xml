@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PR_RecognitionDashboard</name>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5374</uuid>
+        <description>Record dashboard for Recognitions</description>
+        <parentUuid>132e1da9-afdb-42c8-93da-6f7af6fa6f4e</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!record: #&quot;ce828c2e-8809-409d-802d-c3e85fb3f56c_GETONERECORD&quot;(ri!id),
+  #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(
+    firstColumnContents: {
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5370&quot;(
+        record: local!record,
+        creating: false,
+        readOnly: true,
+        documents: if(
+          isnull(local!record.folderId),
+          {},
+          folder(local!record.folderId, &quot;documentChildren&quot;)
+        )
+      ),
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5371&quot;(ri!id)
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>id</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

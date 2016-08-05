@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PR_AllRecognitions</name>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5376</uuid>
+        <description>Report on all Recognitions</description>
+        <parentUuid>132e1da9-afdb-42c8-93da-6f7af6fa6f4e</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  /* Search terms and filters */
+  local!searchTerm,
+  local!creator,
+  local!creationMonth,
+  local!statusFilter,
+  local!priorityFilter,
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, -1, #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&quot;createdOn&quot;, false)),
+  /* Data for the top creators chart. Returns the number *
+   * of records entered by each of the top 5 users       */
+  local!creatorDatasubset: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+    entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+        aggregationColumns: {
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;createdBy&quot;, isGrouping: true),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;id&quot;, aggregationFunction: &quot;COUNT&quot;),
+        }
+      ),
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, 5, #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&quot;id&quot;, false))
+    )
+  ),
+  /* Raw data for the number of records by month chart.  *
+   * Returns the creation date for each record so that   *
+   * they can be grouped by month in a later step        */
+  local!recordsbyMonthDatasubset: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+    entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      selection: #&quot;SYSTEM_SYSRULES_querySelection&quot;(
+        columns: {
+          #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;createdOn&quot;),
+          #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;id&quot;)
+        }
+      ),
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, -1)
+    )
+  ),
+  /* Data for the records by status chart */
+  local!statusDatasubset: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+    entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+        aggregationColumns: {
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;PR_status.value&quot;, isGrouping: true),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;id&quot;, aggregationFunction: &quot;COUNT&quot;),
+        }
+      ),
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, -1)
+    )
+  ),
+  /* Data for the records by priority chart */
+  local!priorityDatasubset: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+    entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+        aggregationColumns: {
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;PR_priority.value&quot;, isGrouping: true),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;id&quot;, aggregationFunction: &quot;COUNT&quot;),
+        }
+      ),
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, -1)
+    )
+  ),
+  with(
+    /* Data that will be displayed in the grid given the *
+     * current search terms and applied filters          */
+    local!datasubset: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+      entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+      query: #&quot;SYSTEM_SYSRULES_query&quot;(
+        selection: #&quot;SYSTEM_SYSRULES_querySelection&quot;(
+          columns: {
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;id&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;employeeId&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;PR_status&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;PR_priority&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;employee&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;PR_taskType&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;PR_level&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;PR_rating&quot;),
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;PR_descriptio&quot;)
+          }
+        ),
+        logicalExpression: if(
+          and(isnull(local!searchTerm), isnull(local!creator), isnull(local!creationMonth), isnull(local!statusFilter), isnull(local!priorityFilter)),
+          /* If no search or filters have been used, don't filter the data in the query */
+          null,
+          #&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(
+            operator: &quot;AND&quot;,
+            logicalExpressions: if(
+              isnull(local!searchTerm),
+              {},
+              #&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(
+                operator: &quot;OR&quot;,
+                filters: {
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;employeeId&quot;, operator: &quot;includes&quot;, value: local!searchTerm),
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;PR_status.value&quot;, operator: &quot;includes&quot;, value: local!searchTerm),
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;PR_priority.value&quot;, operator: &quot;includes&quot;, value: local!searchTerm),
+                  /* Searching on user fields searches by the username */
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;employee&quot;, operator: &quot;includes&quot;, value: local!searchTerm),
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;PR_level.value&quot;, operator: &quot;includes&quot;, value: local!searchTerm),
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;PR_rating.value&quot;, operator: &quot;includes&quot;, value: local!searchTerm),
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;PR_descriptio.value&quot;, operator: &quot;includes&quot;, value: local!searchTerm)
+                }
+              )
+            ),
+            filters: {
+              if(
+                isnull(local!creator),
+                null,
+                #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;createdBy&quot;, operator: &quot;=&quot;, value: local!creator)
+              ),
+              if(
+                isnull(local!creationMonth),
+                null,
+                #&quot;SYSTEM_SYSRULES_queryFilter&quot;(
+                  field: &quot;createdOn&quot;,
+                  operator: &quot;between&quot;,
+                  value: {
+                    todatetime(eomonth(today(), local!creationMonth-1)+1),
+                    todatetime(eomonth(today(), local!creationMonth))
+                  }
+                )
+              ),
+              if(
+                isnull(local!statusFilter),
+                null,
+                #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;PR_status.value&quot;, operator: &quot;=&quot;, value: local!statusFilter)
+              ),
+              if(
+                isnull(local!priorityFilter),
+                null,
+                #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;PR_priority.value&quot;, operator: &quot;=&quot;, value: local!priorityFilter)
+              )
+            }
+          )
+        ),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    /* Returns the number of records entered by month */
+    local!recordsByMonth: #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5345&quot;(local!recordsByMonthDatasubset),
+    #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(
+      firstColumnContents: {
+        if(
+          and(
+            local!datasubset.totalCount = 0,
+            isnull(local!searchTerm),
+            isnull(local!creator),
+            isnull(local!creationMonth),
+            isnull(local!statusFilter),
+            isnull(local!priorityFilter)
+          ),
+          #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            align: &quot;CENTER&quot;,
+            value: {
+              #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                text: &quot;
+
+
+
+
+
+No one has created any &quot; &amp; &quot;Recognitions&quot; &amp; &quot; yet&quot;,
+                style: &quot;HEADER_MEDIUM&quot;
+              ),
+              #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                text: &quot;As entries are created, statistics and details about them will appear here&quot;
+              )
+            }
+          ),
+          {
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+              label: &quot;Recognition Statistics&quot;,
+              firstColumnContents: {
+                #&quot;SYSTEM_SYSRULES_columnChartField&quot;(
+                  label: &quot;Top Recognition Creators&quot;,
+                  showLegend: false,
+                  categories: if(
+                    local!creatorDatasubset.totalCount=0,
+                    {},
+                    apply(
+                      #&quot;a2538be2-a8f5-40a9-86a2-7c6e7fc32ead_FORMATNAME&quot;,
+                      index(local!creatorDatasubset.data, &quot;createdBy&quot;, null)
+                    )
+                  ),
+                  series: #&quot;SYSTEM_SYSRULES_chartSeries&quot;(
+                    label: &quot;Recognitions Created&quot;,
+                    data: index(local!creatorDatasubset.data, &quot;id&quot;, null),
+                    links: if(
+                      local!creatorDatasubset.totalCount=0,
+                      {},
+                      apply(
+                        #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(value: _, saveInto: local!creator),
+                        index(local!creatorDatasubset.data, &quot;createdBy&quot;, null)
+                      )
+                    )
+                  )
+                ),
+                #&quot;SYSTEM_SYSRULES_lineChartField&quot;(
+                  label: &quot;Recent Recognitions By Month&quot;,
+                  categories: local!recordsByMonth.month,
+                  showLegend: false,
+                  series: #&quot;SYSTEM_SYSRULES_chartSeries&quot;(
+                    label: &quot;Recognition Count&quot;,
+                    data: local!recordsByMonth.count,
+                    links: apply(
+                      #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(value: _, saveInto: local!creationMonth),
+                      /* When the user filters by creation month, save the offset *
+                       * between the selected month and the current month         */
+                      0-(5-enumerate(length(local!recordsByMonth.month)))
+                    )
+                  )
+                )
+              },
+              secondColumnContents: {
+                #&quot;SYSTEM_SYSRULES_pieChartField&quot;(
+                  label: &quot;Recognitions by Status&quot;,
+                  series: if(
+                    local!statusDatasubset.totalCount=0,
+                    {},
+                    apply(
+                      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5348&quot;(
+                        data: _,
+                        field: &quot;PR_status&quot;,
+                        linkSaveInto: local!statusFilter
+                      ),
+                      local!statusDatasubset.data
+                    )
+                  ),
+                  showTooltips: true
+                ),
+                #&quot;SYSTEM_SYSRULES_pieChartField&quot;(
+                  label: &quot;Recognitions by Priority&quot;,
+                  series: if(
+                    local!priorityDatasubset.totalCount=0,
+                    {},
+                    apply(
+                      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5348&quot;(
+                        data: _,
+                        field: &quot;PR_priority&quot;,
+                        linkSaveInto: local!priorityFilter
+                      ),
+                      local!priorityDatasubset.data
+                    )
+                  ),
+                  showTooltips: true
+                )
+              }
+            ),
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+              label: &quot;Recognition Details&quot;,
+              firstColumnContents: {
+                #&quot;SYSTEM_SYSRULES_textField&quot;(
+                  labelPosition: &quot;COLLAPSED&quot;,
+                  placeholder: &quot;Search record fields&quot;,
+                  value: local!searchTerm,
+                  saveInto: local!searchTerm,
+                  refreshAfter: &quot;KEYPRESS&quot;
+                )
+              },
+              secondColumnContents: {
+                #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5368&quot;(
+                  creator: local!creator,
+                  creationTime: local!creationMonth,
+                  status: local!statusFilter,
+                  priority: local!priorityFilter,
+                  searchTerm: local!searchTerm
+                )
+              }
+            ),
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+              firstColumnContents: {
+                #&quot;SYSTEM_SYSRULES_gridField&quot;(
+                  totalCount: local!datasubset.totalCount,
+                  emptyGridMessage: &quot;No Recognitions available&quot;,
+                  columns: {
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                      label: &quot;Employee ID&quot;,
+                      field: &quot;employeeId&quot;,
+                      data: index(local!datasubset.data, &quot;employeeId&quot;, null)
+                    ),
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                      label: &quot;Status&quot;,
+                      field: &quot;PR_status.value&quot;,
+                      data: index(index(local!datasubset.data, &quot;PR_status&quot;, null), &quot;value&quot;, null)
+                    ),
+                    #&quot;SYSTEM_SYSRULES_gridImageColumn&quot;(
+                      label: &quot;Priority&quot;,
+                      field: &quot;PR_priority.value&quot;,
+                      data: if(
+                        isnull(index(local!datasubset.data, &quot;PR_priority&quot;, null)),
+                        {},
+                        apply(
+                          #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5366&quot;,
+                          index(index(local!datasubset.data, &quot;PR_priority&quot;, null), &quot;value&quot;, null)
+                        )
+                      ),
+                      size: &quot;ICON&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                      label: &quot;Employee&quot;,
+                      field: &quot;employee&quot;,
+                      data: if(
+                        local!datasubset.totalCount = 0,
+                        {},
+                        apply(
+                          #&quot;a2538be2-a8f5-40a9-86a2-7c6e7fc32ead_FORMATNAME&quot;,
+                          index(local!datasubset.data, &quot;employee&quot;, null)
+                        )
+                      ),
+                      links: if(
+                        local!datasubset.totalCount = 0,
+                        {},
+                        apply(
+                          #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5375&quot;,
+                          merge(
+                            index(local!datasubset.data, &quot;employee&quot;, null),
+                            index(local!datasubset.data, &quot;employee&quot;, null)
+                          )
+                        )
+                      )
+                    ),
+                    /* Sorting will not work for a nested multiple field */
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                      label: &quot;Task Type&quot;,
+                      field: &quot;PR_taskType&quot;,
+                      data: if(
+                        local!datasubset.totalCount=0,
+                        {},
+                        apply(
+                          #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5358&quot;(
+                            data: local!datasubset.data,
+                            index: _,
+                            field: &quot;PR_taskType&quot;
+                          ),
+                          enumerate(local!datasubset.totalCount) + 1
+                        )
+                      )
+                    ),
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                      label: &quot;Level&quot;,
+                      field: &quot;PR_level.value&quot;,
+                      data: index(index(local!datasubset.data, &quot;PR_level&quot;, null), &quot;value&quot;, null)
+                    ),
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                      label: &quot;Rating&quot;,
+                      field: &quot;PR_rating.value&quot;,
+                      data: index(index(local!datasubset.data, &quot;PR_rating&quot;, null), &quot;value&quot;, null)
+                    ),
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                      label: &quot;Description&quot;,
+                      field: &quot;PR_descriptio&quot;,
+                      data: index(local!datasubset.data, &quot;PR_descriptio&quot;, &quot;value&quot;, null)
+                    )
+                  },
+                  value: local!pagingInfo,
+                  saveInto: local!pagingInfo
+                )
+              }
+            )
+          }
+        )
+      }
+    )
+  )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>
