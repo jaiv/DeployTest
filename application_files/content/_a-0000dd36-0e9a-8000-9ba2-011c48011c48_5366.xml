@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PR_GetIconForPriority</name>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5366</uuid>
+        <description>Given a Priority value, returns the appropriate icon for display</description>
+        <parentUuid>549bab1a-7bf8-45d2-ad14-61adff7dc5f8</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>if(
+  ri!priority = &quot;Low&quot;,
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+    document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;PRIORITY_LOW&quot;),
+    altText: ri!priority,
+    caption: ri!priority
+  ),
+  if(
+    ri!priority = &quot;Medium&quot;,
+    #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+      document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;HARVEY_0&quot;),
+      altText: ri!priority,
+      caption: ri!priority
+    ),
+    if(
+      ri!priority = &quot;High&quot;,
+      #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+        document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;PRIORITY_HIGH&quot;),
+        altText: ri!priority,
+        caption: ri!priority
+      ),
+      if(
+        ri!priority = &quot;Critical&quot;,
+        #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+          document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_WARN&quot;),
+          altText: ri!priority,
+          caption: ri!priority
+        ),
+        {}
+      )
+    )
+  )
+)
+</definition>
+        <namedTypedValue>
+            <name>priority</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

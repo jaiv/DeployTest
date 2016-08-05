@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PR_FormatStatusDisplay</name>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5359</uuid>
+        <description>Helper rule to format the Status column of an interface using data from a process report</description>
+        <parentUuid>549bab1a-7bf8-45d2-ad14-61adff7dc5f8</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>choose(
+  ri!status + 1,
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;PROGRESS_RUNNING&quot;), altText: &quot;Assigned&quot;, caption: &quot;Assigned&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;PROGRESS_RUNNING&quot;), altText: &quot;Viewed by Assignee&quot;, caption: &quot;Viewed by Assignee&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_OK&quot;), altText: &quot;Completed&quot;, caption: &quot;Completed&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_NOTDONE&quot;), altText: &quot;Not Started&quot;, caption: &quot;Not Started&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_NOTDONE&quot;), altText: &quot;Cancelled&quot;, caption: &quot;Cancelled&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;PROGRESS_PAUSED&quot;), altText: &quot;Paused&quot;, caption: &quot;Paused&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_WARN&quot;), altText: &quot;Unattended&quot;, caption: &quot;Unattended&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_ERROR&quot;), altText: &quot;Aborted&quot;, caption: &quot;Aborted&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_ERROR&quot;), altText: &quot;Cancelled By Exception&quot;, caption: &quot;Cancelled By Exception&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;PROGRESS_RUNNING&quot;), altText: &quot;Submitted&quot;, caption: &quot;Submitted&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;PROGRESS_RUNNING&quot;), altText: &quot;Running&quot;, caption: &quot;Running&quot;),
+  #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(icon: &quot;STATUS_ERROR&quot;), altText: &quot;Error&quot;, caption: &quot;Error&quot;)
+)</definition>
+        <namedTypedValue>
+            <name>status</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

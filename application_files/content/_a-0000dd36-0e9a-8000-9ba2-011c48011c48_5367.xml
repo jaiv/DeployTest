@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PR_DeleteRecognitionEntry</name>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5367</uuid>
+        <description>Interface to delete a Recognition</description>
+        <parentUuid>132e1da9-afdb-42c8-93da-6f7af6fa6f4e</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: if(
+    isnull(ri!record.employeeId),
+    &quot;Delete ?&quot;,
+    &quot;Delete &quot; &amp; ri!record.employeeId &amp; &quot; ?&quot;
+  ),
+  instructions: &quot;&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+      labelPosition: &quot;COLLAPSED&quot;,
+      readOnly: true,
+      value: &quot;Submitting this form will delete your record and its attachments. The data will no longer exist or be visible in Tempo.
+
+After deletion, it is recommended to return to the records list, as this record will become unavailable.&quot;
+    )
+  },
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Delete&quot;,
+        style: &quot;PRIMARY&quot;,
+        confirmMessage: &quot;Are you sure you want to delete this record? This action cannot be undone.&quot;
+      )
+    },
+    secondaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Cancel&quot;,
+        style: &quot;NORMAL&quot;,
+        value: true,
+        saveInto: ri!cancel,
+        skipValidation: true
+      )
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>record</name>
+            <type>
+                <name>PR_Recognition</name>
+                <namespace>urn:com:appian:types:PR</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

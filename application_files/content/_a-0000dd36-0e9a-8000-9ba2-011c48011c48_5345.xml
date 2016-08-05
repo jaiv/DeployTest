@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PR_GetAllCreationMonths</name>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5345</uuid>
+        <description>Return a formatted dictionary of the last six months and how many records were created in each of those months</description>
+        <parentUuid>549bab1a-7bf8-45d2-ad14-61adff7dc5f8</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  /* Turns a list of creation date-times to a list of      *
+   * months and years, e.g. 2016-3, 2016-3, 2016-4,-2016-6 */
+  local!allCreationMonths: if(
+    ri!recordsbyMonth.totalCount=0,
+    {},
+    apply(
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5355&quot;,
+      ri!recordsbyMonth.data.createdOn
+    )
+  ),
+  /* Returns a dictionary of the number of times each of those *
+   * months appears in the data set                            */
+  apply(
+    #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5349&quot;(
+      term: _,
+      array: local!allCreationMonths
+    ),
+    #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5356&quot;(
+      startIndex: -5,
+      endIndex: 0
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>recordsByMonth</name>
+            <type>
+                <name>DataSubset</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

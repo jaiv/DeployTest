@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Recognition" a:uuid="f2ea1187-5d24-41bc-af75-0640282fa0cc">
+        <a:pluralName>Recognitions</a:pluralName>
+        <a:description>List of entries in the Peer Recognition application</a:description>
+        <a:urlStub>viG9Ag</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="93fa9622-18b7-45bf-a079-952243ba7b06@_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5382"/>
+        <a:listViewTemplateExpr>#&quot;SYSTEM_SYSRULES_recordGridLayoutColumns&quot;(
+  emptygridmessage: &quot;No Recognitions available&quot;,
+  columns: {
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Employee ID&quot;,
+      weight: 7,
+      field: &quot;employeeId&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_linkField&quot;(
+        links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+          label: rf!employeeId,
+          recordType: rp!type,
+          identifier: rp!id
+        )
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Status&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      weight: 3,
+      field: &quot;PR_status.order&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: rf!PR_status.value
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Priority&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      weight: 2,
+      field: &quot;PR_priority.order&quot;,
+      align: &quot;CENTER&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_imageField&quot;(
+        images: {
+          #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5366&quot;(rf!PR_priority.value)
+        },
+        size: &quot;ICON&quot;
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Created By&quot;,
+      weight: 4,
+      field: &quot;createdBy&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_linkField&quot;(
+        links: {
+          #&quot;SYSTEM_SYSRULES_userRecordLink&quot;(
+            label: #&quot;a2538be2-a8f5-40a9-86a2-7c6e7fc32ead_FORMATNAME&quot;(rf!createdBy),
+            user: rf!createdBy
+          )
+        }
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Updated On&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      weight: 2,
+      field: &quot;updatedOn&quot;,
+      align: &quot;RIGHT&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5352&quot;(rf!updatedOn),
+        align: &quot;RIGHT&quot;
+      )
+    )
+  },
+  pageSize: 50,
+  defaultSort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+    field: &quot;updatedOn&quot;,
+    ascending: false
+  )
+)</a:listViewTemplateExpr>
+        <a:fieldCfg name="Status">
+            <a:isSortable>false</a:isSortable>
+            <a:isSearchable>false</a:isSearchable>
+            <a:isFacet>true</a:isFacet>
+            <a:facetType>EXPRESSION</a:facetType>
+            <a:isExclusiveFacet>true</a:isExclusiveFacet>
+            <a:facetExpr>with(
+  local!options: #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5391&quot;(),
+  local!statusCounts: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+    entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+        aggregationColumns: {
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;PR_status.value&quot;, isGrouping: true),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;id&quot;, aggregationFunction: &quot;COUNT&quot;)
+        }
+      ),
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, -1, #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&quot;PR_status.value&quot;, true))
+    )
+  ),
+  local!statusCountsOrdered: if(
+    local!statusCounts.totalCount = 0,
+    {},
+    apply(
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5362&quot;(
+        local!statusCounts.data.id,
+        local!statusCounts.data.PR_status.value,
+        _
+      ),
+      local!options.value
+    )
+  ),
+  #&quot;SYSTEM_SYSRULES_facet&quot;(
+    name: &quot;Status&quot;,
+    options: apply(
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5361&quot;(_, &quot;PR_status&quot;, _),
+      merge(
+        local!options,
+        local!statusCountsOrdered
+      )
+    )
+  )
+)</a:facetExpr>
+            <a:sortOrderIndex>0</a:sortOrderIndex>
+            <a:facetOrderIndex>0</a:facetOrderIndex>
+            <a:visibilityExpr></a:visibilityExpr>
+            <a:defaultOptionExpr></a:defaultOptionExpr>
+        </a:fieldCfg>
+        <a:fieldCfg name="Priority">
+            <a:isSortable>false</a:isSortable>
+            <a:isSearchable>false</a:isSearchable>
+            <a:isFacet>true</a:isFacet>
+            <a:facetType>EXPRESSION</a:facetType>
+            <a:isExclusiveFacet>true</a:isExclusiveFacet>
+            <a:facetExpr>with(
+  local!options2: #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5392&quot;(),
+  local!priorityCounts: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+    entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+        aggregationColumns: {
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;PR_priority.value&quot;, isGrouping: true),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;id&quot;, aggregationFunction: &quot;COUNT&quot;)
+        }
+      ),
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, -1, #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&quot;PR_priority.value&quot;, true))
+    )
+  ),
+  local!priorityCountsOrdered: if(
+    local!priorityCounts.totalCount = 0,
+    {},
+    apply(
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5362&quot;(
+        local!priorityCounts.data.id,
+        local!priorityCounts.data.PR_priority.value,
+        _
+      ),
+      local!options2.value
+    )
+  ),
+  #&quot;SYSTEM_SYSRULES_facet&quot;(
+    name: &quot;Priority&quot;,
+    options: apply(
+      #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5361&quot;(_, &quot;PR_priority&quot;, _),
+      merge(
+        local!options2,
+        local!priorityCountsOrdered
+      )
+    )
+  )
+)</a:facetExpr>
+            <a:sortOrderIndex>1</a:sortOrderIndex>
+            <a:facetOrderIndex>1</a:facetOrderIndex>
+            <a:visibilityExpr></a:visibilityExpr>
+            <a:defaultOptionExpr></a:defaultOptionExpr>
+        </a:fieldCfg>
+        <a:fieldCfg name="Created By">
+            <a:isSortable>false</a:isSortable>
+            <a:isSearchable>false</a:isSearchable>
+            <a:isFacet>true</a:isFacet>
+            <a:facetType>EXPRESSION</a:facetType>
+            <a:isExclusiveFacet>true</a:isExclusiveFacet>
+            <a:facetExpr>with(
+  local!creators:#&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+    entity: #&quot;6271346b-fd51-44ab-bb55-394fbe8cb1a2_MAINDSECONSTANT&quot;,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+        aggregationColumns: {
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;createdBy&quot;, isGrouping: true),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;createdBy&quot;, alias: &quot;numberCreated&quot;, aggregationFunction: &quot;COUNT&quot;)
+        }
+      ),
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(1, -1, #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&quot;createdBy&quot;, true))
+    )
+  ),
+  if(
+    local!creators.totalCount = 0,
+    {},
+    #&quot;SYSTEM_SYSRULES_facet&quot;(
+      name: &quot;Created By&quot;,
+      options: apply(
+        #&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5350&quot;,
+        merge(
+          1+enumerate(local!creators.totalCount),
+          local!creators.data.createdBy,
+          local!creators.data.numberCreated
+        )
+      )
+    )
+  )
+)</a:facetExpr>
+            <a:sortOrderIndex>2</a:sortOrderIndex>
+            <a:facetOrderIndex>2</a:facetOrderIndex>
+            <a:visibilityExpr></a:visibilityExpr>
+            <a:defaultOptionExpr></a:defaultOptionExpr>
+        </a:fieldCfg>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5374&quot;(rp!id)</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>fcbcfaf3-135c-4bb6-b988-2dc0e45d80eb</a:relatedActionCfg>
+            <a:relatedActionCfg>2724988f-5ca0-400f-afc2-757beb89cdd4</a:relatedActionCfg>
+            <a:relatedActionCfg>4d64edf2-54c5-4b2b-9f13-6a57aae872fc</a:relatedActionCfg>
+            <a:relatedActionCfg>9c1c1d69-6116-4c61-915a-b6966c8c1c34</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:detailViewCfg>
+            <a:nameExpr>&quot;Activity History&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5364&quot;(rp!id)</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>_jVx6fw</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>fcbcfaf3-135c-4bb6-b988-2dc0e45d80eb</a:relatedActionCfg>
+            <a:relatedActionCfg>2724988f-5ca0-400f-afc2-757beb89cdd4</a:relatedActionCfg>
+            <a:relatedActionCfg>4d64edf2-54c5-4b2b-9f13-6a57aae872fc</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="8ab92c7e-f5dd-4eb7-9d22-230577f45e89"/>
+            <a:contextExpr>with(
+  local!record: #&quot;ce828c2e-8809-409d-802d-c3e85fb3f56c_GETONERECORD&quot;(rp!id),
+  {
+    record: local!record,
+    documents: folder(local!record.folderId, &quot;documentChildren&quot;),
+  }
+)</a:contextExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:refId>fcbcfaf3-135c-4bb6-b988-2dc0e45d80eb</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="e2bcc2a6-bb04-4bb6-aa4c-2a8edad307ef"/>
+            <a:contextExpr>{
+  recordId: rp!id
+}</a:contextExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:refId>2724988f-5ca0-400f-afc2-757beb89cdd4</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="90c88dd2-8059-4c25-9998-3c20671e4feb"/>
+            <a:contextExpr>{
+  recordId: rp!id
+}</a:contextExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:refId>4d64edf2-54c5-4b2b-9f13-6a57aae872fc</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="89657c23-2d92-4d86-8576-1c7feed18191"/>
+            <a:contextExpr>{
+  record: #&quot;ce828c2e-8809-409d-802d-c3e85fb3f56c_GETONERECORD&quot;(rp!id)
+}</a:contextExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:refId>9c1c1d69-6116-4c61-915a-b6966c8c1c34</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:titleExpr>rf!employeeId</a:titleExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:layoutType>GRID</a:layoutType>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users/>
+            <groups>
+                <groupUuid>SYSTEM_GROUP_ROLE_QUICK_APP_CREATORS</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dd31-fa60-8000-9aee-01075c01075c_26</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

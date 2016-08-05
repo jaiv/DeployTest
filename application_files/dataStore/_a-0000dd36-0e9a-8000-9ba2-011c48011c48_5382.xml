@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataStoreHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <dataStore>
+        <uuid>_a-0000dd36-0e9a-8000-9ba2-011c48011c48_5382</uuid>
+        <name>PR Recognitions</name>
+        <description>Data store for the Peer Recognition application</description>
+        <dataSourceKey>java:/jdbc/Appian</dataSourceKey>
+        <adaptingExplicitSqlNames>false</adaptingExplicitSqlNames>
+        <autoUpdateSchema>false</autoUpdateSchema>
+        <entities>
+            <entity>
+                <uuid>4e755eaf-6897-4b38-8f52-70cb9e16e015</uuid>
+                <name>PR_Status</name>
+                <type>{urn:com:appian:types:PR}PR_Status</type>
+            </entity>
+            <entity>
+                <uuid>7396a62f-9f8b-4012-b274-c095cd97c08f</uuid>
+                <name>PR_Priority</name>
+                <type>{urn:com:appian:types:PR}PR_Priority</type>
+            </entity>
+            <entity>
+                <uuid>323bd9e3-093b-4559-9ba4-f5117443c0fb</uuid>
+                <name>PR_TaskType</name>
+                <type>{urn:com:appian:types:PR}PR_TaskType</type>
+            </entity>
+            <entity>
+                <uuid>8853d1ee-471a-4fbe-a216-793b0ec72a83</uuid>
+                <name>PR_Level</name>
+                <type>{urn:com:appian:types:PR}PR_Level</type>
+            </entity>
+            <entity>
+                <uuid>ce07dc50-571a-4f93-871d-72185cee553c</uuid>
+                <name>PR_Rating</name>
+                <type>{urn:com:appian:types:PR}PR_Rating</type>
+            </entity>
+            <entity>
+                <uuid>c26393da-4f25-47ed-94b7-72dcd2636d63</uuid>
+                <name>PR_Paragraph</name>
+                <type>{urn:com:appian:types:PR}PR_Paragraph</type>
+            </entity>
+            <entity>
+                <uuid>5abffba1-6f02-478d-978b-3d23fb23e731</uuid>
+                <name>PR_Activity</name>
+                <type>{urn:com:appian:types:PR}PR_Activity</type>
+            </entity>
+            <entity>
+                <uuid>93fa9622-18b7-45bf-a079-952243ba7b06</uuid>
+                <name>PR_Recognition</name>
+                <type>{urn:com:appian:types:PR}PR_Recognition</type>
+            </entity>
+        </entities>
+    </dataStore>
+    <isPublished>true</isPublished>
+    <roleMap>
+        <role allowForAll="false" inherit="false" name="administrators">
+            <users/>
+            <groups>
+                <groupUuid>SYSTEM_GROUP_ROLE_QUICK_APP_CREATORS</groupUuid>
+            </groups>
+        </role>
+        <role allowForAll="false" inherit="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="readers">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dd31-fa60-8000-9aee-01075c01075c_26</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</dataStoreHaul>
